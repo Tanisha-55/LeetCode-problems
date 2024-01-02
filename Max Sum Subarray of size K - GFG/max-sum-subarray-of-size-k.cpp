@@ -6,21 +6,22 @@ using namespace std;
 class Solution{   
 public:
     long maximumSumSubarray(int K, vector<int> &Arr , int N){
-        // code here 
-        int left=0, right=0;
-        long maxi=0, sum=0;
-        while(right<N){
-            sum+=Arr[right];
-            if((right-left+1) < K){
-                right++;
-            }
-            else if((right-left+1) == K){
-                maxi=max(maxi, sum);
-                sum-=Arr[left];
-                left++; right++;
-            }
-        }
-        return maxi;
+        long maxi = 0, sum = 0;
+
+    // Calculate sum of first subarray of size K
+    for (int i = 0; i < K; i++) {
+        sum += Arr[i];
+    }
+
+    maxi = sum;
+
+    // Use sliding window to find maximum sum
+    for (int i = K; i < N; i++) {
+        sum = sum - Arr[i - K] + Arr[i];
+        maxi = max(maxi, sum);
+    }
+
+    return maxi;
     }
 };
 
